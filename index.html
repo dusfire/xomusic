@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XO Music - Stream Music Online</title>
+    <!-- Boxicons CSS -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/dusfire/icon/css/style.css"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Description (for SEO) -->
+    <meta
+      name="description"
+      content="XO Music is an online music streaming platform where you can listen to your favorite tracks anytime, anywhere."
+    />
+
+    <!-- Keywords (for SEO) -->
+    <meta
+      name="keywords"
+      content="music, streaming, online music, XO Music, music app, listen to music, free music"
+    />
+
+    <!-- Open Graph Meta Tags (for social media) -->
+    <meta property="og:title" content="XO Music - Stream Music Online" />
+    <meta
+      property="og:description"
+      content="XO Music is an online music streaming platform where you can listen to your favorite tracks anytime, anywhere."
+    />
+    <meta
+      property="og:image"
+      content="https://dusfire.github.io/xomusic/favicon/og-image.jpg"
+    />
+    <!-- Replace with actual image URL -->
+    <meta property="og:url" content="https://dusfire.github.io/xomusic/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="XO Music" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="XO Music - Stream Music Online" />
+    <meta
+      name="twitter:description"
+      content="XO Music is an online music streaming platform where you can listen to your favorite tracks anytime, anywhere."
+    />
+    <meta
+      name="twitter:image"
+      content="https://dusfire.github.io/xomusic/favicon/og-image.jpg"
+    />
+
+    <!-- Apple Meta Tags (For iOS web app) -->
+    <meta name="apple-mobile-web-app-title" content="XO Music" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Canonical URL for SEO -->
+    <link rel="canonical" href="https://dusfire.github.io/xomusic/" />
+
+    <!-- Language Tag -->
+    <meta http-equiv="Content-Language" content="en-US" />
+
+    <!-- Robots Meta Tag (for search engine indexing) -->
+    <meta name="robots" content="index, follow" />
+
+    <!-- Favicon and App Icons -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="favicon/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+  </head>
+  <body class="dark-theme">
+    <div
+      id="install-banner"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #ff8c00;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        z-index: 9999;
+      "
+    >
+      XO Music App Install Kare?
+      <button
+        id="install-btn"
+        style="
+          margin-left: 10px;
+          background: white;
+          color: #121212;
+          padding: 5px 10px;
+          border: none;
+          cursor: pointer;
+          border-radius: 5px;
+        "
+      >
+        Install
+      </button>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+      <div class="user-profile">
+        <div class="login-btn" id="loginBtn">
+          <button><i class="bx bx-log-in"></i> Login</button>
+        </div>
+        <div class="profile-img" id="profileSection" style="display: none">
+          <img src="user.svg" alt="User Profile" id="userProfileImg" />
+          <div class="logout-dropdown" id="logoutDropdown">
+            <button id="logoutBtn">Logout</button>
+          </div>
+        </div>
+      </div>
+      <div class="header-icons">
+        <i class="bx bx-search" id="searchIcon"></i>
+        <i class="bx bx-moon" id="themeToggle"></i>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <div class="music-player">
+        <div class="song-cover-container">
+          <div class="song-cover">
+            <img src="" alt="Song Cover" id="currentSongCover" />
+            <div class="audio-wave" id="audioWave"></div>
+          </div>
+        </div>
+        <div class="song-info">
+          <h1 id="songTitle">Songs Title</h1>
+          <p id="artistName">Artists Name</p>
+        </div>
+      </div>
+
+      <!-- Player Controls -->
+      <div class="player-controls">
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+            <div class="progress-handle" id="progressHandle"></div>
+          </div>
+          <div class="time-info">
+            <span id="currentTime">0:00</span>
+            <span id="totalTime">0:00</span>
+          </div>
+        </div>
+        <div class="control-buttons">
+          <button id="timerBtn" class="control-btn">
+            <i class="dus-timer1"></i>
+          </button>
+          <button id="prevBtn" class="control-btn">
+            <i class="bx bx-skip-previous"></i>
+          </button>
+          <button id="playPauseBtn" class="play-btn">
+            <i class="bx bx-play" id="playIcon"></i>
+          </button>
+          <button id="nextBtn" class="control-btn">
+            <i class="bx bx-skip-next"></i>
+          </button>
+          <button id="repeatBtn" class="control-btn">
+            <i class="dus-repeat2"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Search Popup -->
+    <div class="search-popup" id="searchPopup">
+      <div class="search-header">
+        <i class="bx bx-arrow-back" id="closeSearch"></i>
+        <div class="search-input">
+          <i class="bx bx-search"></i>
+          <input
+            type="text"
+            placeholder="Search songs, artists..."
+            id="searchInput"
+          />
+          <i class="bx bx-x" id="clearSearch"></i>
+        </div>
+      </div>
+      <div class="search-results" id="searchResults">
+        <!-- Search results will be displayed here -->
+      </div>
+    </div>
+
+    <!-- Timer Options Popup -->
+    <div class="timer-popup" id="timerPopup">
+      <div class="timer-header">
+        <h3>Sleep Timer</h3>
+        <button id="closeTimer"><i class="bx bx-x"></i></button>
+      </div>
+      <div class="timer-options">
+        <button data-time="5">5 minutes</button>
+        <button data-time="10">10 minutes</button>
+        <button data-time="15">15 minutes</button>
+        <button data-time="30">30 minutes</button>
+        <button data-time="45">45 minutes</button>
+        <button data-time="60">60 minutes</button>
+      </div>
+      <div class="timer-active" id="timerActive">
+        <p>Timer is set for <span id="timerValue">0</span> minutes</p>
+        <button id="cancelTimer">Turn Off</button>
+      </div>
+    </div>
+
+    <!-- Login Required Popup -->
+    <div class="login-required" id="loginRequired">
+      <div class="login-box">
+        <i class="bx bx-lock-alt"></i>
+        <h3>Please login to continue listening</h3>
+        <button id="loginBtnPopup">Login</button>
+      </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        signOut,
+        onAuthStateChanged,
+        GoogleAuthProvider,
+        signInWithPopup,
+      } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+      // My web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCev28yOKcJfzPdtFDMcoyxRAVeCKfbvU4",
+        authDomain: "xomusicapp.firebaseapp.com",
+        projectId: "xomusicapp",
+        storageBucket: "xomusicapp.firebasestorage.app",
+        messagingSenderId: "912280091259",
+        appId: "1:912280091259:web:ec3dd5532815585c4580de",
+        measurementId: "G-NCXN2RWXDE",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth();
+
+      // Make Firebase auth available globally
+      window.firebaseAuth = {
+        auth: auth,
+        GoogleAuthProvider: GoogleAuthProvider,
+        signInWithPopup: signInWithPopup,
+        createUserWithEmailAndPassword: createUserWithEmailAndPassword,
+        signInWithEmailAndPassword: signInWithEmailAndPassword,
+        signOut: signOut,
+        onAuthStateChanged: onAuthStateChanged,
+      };
+    </script>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XO Music - Login/Signup</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="favicon/apple-touch-icon.png"
+    />
+    <style>
+      :root {
+        --primary-color: #f89b40;
+        --text-color: #ffffff;
+        --bg-color: #121212;
+        --secondary-bg: #1e1e1e;
+        --overlay-bg: rgba(0, 0, 0, 0.9);
+        --hover-color: #2a2a2a;
+        --error-color: #ff5252;
+        --success-color: #4caf50;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 400px;
+        background-color: var(--secondary-bg);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+
+      .header {
+        padding: 2rem 1rem;
+        text-align: center;
+        background-color: var(--primary-color);
+        position: relative;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .header p {
+        font-size: 1rem;
+        opacity: 0.9;
+      }
+
+      .back-btn {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: transparent;
+        border: none;
+        color: var(--text-color);
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .tab {
+        flex: 1;
+        text-align: center;
+        padding: 1rem;
+        cursor: pointer;
+        font-weight: 600;
+        background: transparent;
+        border: none;
+        color: var(--text-color);
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.3s ease;
+      }
+
+      .tab.active {
+        border-bottom: 2px solid var(--primary-color);
+        color: var(--primary-color);
+      }
+
+      .form-container {
+        padding: 2rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      .input-with-icon {
+        position: relative;
+      }
+
+      .input-with-icon input {
+        width: 100%;
+        padding: 1rem 1rem 1rem 3rem;
+        border: none;
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.08);
+        color: var(--text-color);
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+      }
+
+      .input-with-icon i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .input-with-icon input:focus {
+        background-color: rgba(255, 255, 255, 0.12);
+        outline: none;
+      }
+
+      .password-toggle {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 1.25rem;
+        cursor: pointer;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        border-radius: 8px;
+        background-color: var(--primary-color);
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-bottom: 1.5rem;
+      }
+
+      .submit-btn:hover {
+        background-color: #e08121;
+      }
+
+      .or-divider {
+        text-align: center;
+        position: relative;
+        margin: 1.5rem 0;
+      }
+
+      .or-divider::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 45%;
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .or-divider::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 45%;
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .social-login {
+        margin-top: 1.5rem;
+      }
+
+      .google-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 1rem;
+        border: none;
+        border-radius: 8px;
+        background-color: #ffffff;
+        color: #333;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .google-btn:hover {
+        background-color: #f2f2f2;
+      }
+
+      .error-message {
+        color: var(--error-color);
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        display: none;
+      }
+
+      .success-message {
+        color: var(--success-color);
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        display: none;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .form-container {
+        animation: fadeIn 0.3s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <button class="back-btn" id="backBtn">
+          <i class="bx bx-arrow-back"></i>
+        </button>
+        <h1>XO Music</h1>
+        <p>Your favorite music in one place</p>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" id="loginTab">Login</button>
+        <button class="tab" id="signupTab">Sign Up</button>
+      </div>
+
+      <div class="form-container" id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <div class="input-with-icon">
+            <i class="bx bx-envelope"></i>
+            <input
+              type="email"
+              id="loginEmail"
+              placeholder="Enter your email"
+            />
+          </div>
+          <p class="error-message" id="loginEmailError"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <div class="input-with-icon">
+            <i class="bx bx-lock-alt"></i>
+            <input
+              type="password"
+              id="loginPassword"
+              placeholder="Enter your password"
+            />
+            <button class="password-toggle" id="loginTogglePassword">
+              <i class="bx bx-show"></i>
+            </button>
+          </div>
+          <p class="error-message" id="loginPasswordError"></p>
+        </div>
+
+        <button class="submit-btn" id="loginSubmit">Login</button>
+        <p class="error-message" id="loginError"></p>
+        <p class="success-message" id="loginSuccess"></p>
+
+        <div class="or-divider">OR</div>
+
+        <div class="social-login">
+          <button class="google-btn" id="googleLogin">
+            <i class="bx bxl-google" style="font-size: 1.5rem"></i>
+            Continue with Google
+          </button>
+        </div>
+      </div>
+
+      <div class="form-container hidden" id="signupForm">
+        <div class="form-group">
+          <label for="signupEmail">Email</label>
+          <div class="input-with-icon">
+            <i class="bx bx-envelope"></i>
+            <input
+              type="email"
+              id="signupEmail"
+              placeholder="Enter your email"
+            />
+          </div>
+          <p class="error-message" id="signupEmailError"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <div class="input-with-icon">
+            <i class="bx bx-lock-alt"></i>
+            <input
+              type="password"
+              id="signupPassword"
+              placeholder="Choose a password"
+            />
+            <button class="password-toggle" id="signupTogglePassword">
+              <i class="bx bx-show"></i>
+            </button>
+          </div>
+          <p class="error-message" id="signupPasswordError"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="input-with-icon">
+            <i class="bx bx-lock-alt"></i>
+            <input
+              type="password"
+              id="confirmPassword"
+              placeholder="Confirm your password"
+            />
+            <button class="password-toggle" id="confirmTogglePassword">
+              <i class="bx bx-show"></i>
+            </button>
+          </div>
+          <p class="error-message" id="confirmPasswordError"></p>
+        </div>
+
+        <button class="submit-btn" id="signupSubmit">Sign Up</button>
+        <p class="error-message" id="signupError"></p>
+        <p class="success-message" id="signupSuccess"></p>
+
+        <div class="or-divider">OR</div>
+
+        <div class="social-login">
+          <button class="google-btn" id="googleSignup">
+            <i class="bx bxl-google" style="font-size: 1.5rem"></i>
+            Sign up with Google
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        signOut,
+        GoogleAuthProvider,
+        signInWithPopup,
+      } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+      // My web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCev28yOKcJfzPdtFDMcoyxRAVeCKfbvU4",
+        authDomain: "xomusicapp.firebaseapp.com",
+        projectId: "xomusicapp",
+        storageBucket: "xomusicapp.firebasestorage.app",
+        messagingSenderId: "912280091259",
+        appId: "1:912280091259:web:ec3dd5532815585c4580de",
+        measurementId: "G-NCXN2RWXDE",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+      const googleProvider = new GoogleAuthProvider();
+
+      // DOM Elements
+      const loginTab = document.getElementById("loginTab");
+      const signupTab = document.getElementById("signupTab");
+      const loginForm = document.getElementById("loginForm");
+      const signupForm = document.getElementById("signupForm");
+      const backBtn = document.getElementById("backBtn");
+
+      // Password Toggle Elements
+      const loginTogglePassword = document.getElementById(
+        "loginTogglePassword"
+      );
+      const signupTogglePassword = document.getElementById(
+        "signupTogglePassword"
+      );
+      const confirmTogglePassword = document.getElementById(
+        "confirmTogglePassword"
+      );
+      const loginPassword = document.getElementById("loginPassword");
+      const signupPassword = document.getElementById("signupPassword");
+      const confirmPassword = document.getElementById("confirmPassword");
+
+      // Form Elements
+      const loginEmail = document.getElementById("loginEmail");
+      const loginSubmit = document.getElementById("loginSubmit");
+      const signupEmail = document.getElementById("signupEmail");
+      const signupSubmit = document.getElementById("signupSubmit");
+      const googleLogin = document.getElementById("googleLogin");
+      const googleSignup = document.getElementById("googleSignup");
+
+      // Error/Success Messages
+      const loginEmailError = document.getElementById("loginEmailError");
+      const loginPasswordError = document.getElementById("loginPasswordError");
+      const loginError = document.getElementById("loginError");
+      const loginSuccess = document.getElementById("loginSuccess");
+      const signupEmailError = document.getElementById("signupEmailError");
+      const signupPasswordError = document.getElementById(
+        "signupPasswordError"
+      );
+      const confirmPasswordError = document.getElementById(
+        "confirmPasswordError"
+      );
+      const signupError = document.getElementById("signupError");
+      const signupSuccess = document.getElementById("signupSuccess");
+
+      // Tab Switching
+      loginTab.addEventListener("click", () => {
+        loginTab.classList.add("active");
+        signupTab.classList.remove("active");
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+        clearErrors();
+      });
+
+      signupTab.addEventListener("click", () => {
+        signupTab.classList.add("active");
+        loginTab.classList.remove("active");
+        signupForm.classList.remove("hidden");
+        loginForm.classList.add("hidden");
+        clearErrors();
+      });
+
+      // Back Button
+      backBtn.addEventListener("click", () => {
+        window.location.href = "https://dusfire.github.io/xomusic/";
+      });
+
+      // Password Toggle
+      loginTogglePassword.addEventListener("click", () => {
+        togglePasswordVisibility(loginPassword, loginTogglePassword);
+      });
+
+      signupTogglePassword.addEventListener("click", () => {
+        togglePasswordVisibility(signupPassword, signupTogglePassword);
+      });
+
+      confirmTogglePassword.addEventListener("click", () => {
+        togglePasswordVisibility(confirmPassword, confirmTogglePassword);
+      });
+
+      function togglePasswordVisibility(passwordField, toggleButton) {
+        const type =
+          passwordField.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        passwordField.setAttribute("type", type);
+
+        const icon = toggleButton.querySelector("i");
+        if (type === "text") {
+          icon.classList.remove("bx-show");
+          icon.classList.add("bx-hide");
+        } else {
+          icon.classList.remove("bx-hide");
+          icon.classList.add("bx-show");
+        }
+      }
+
+      // Form Validation
+      function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      function validatePassword(password) {
+        return password.length >= 6;
+      }
+
+      function clearErrors() {
+        const errorElements = document.querySelectorAll(
+          ".error-message, .success-message"
+        );
+        errorElements.forEach((element) => {
+          element.style.display = "none";
+          element.textContent = "";
+        });
+      }
+
+      // Login Form
+      loginSubmit.addEventListener("click", () => {
+        clearErrors();
+        let isValid = true;
+
+        if (!loginEmail.value.trim()) {
+          loginEmailError.textContent = "Email is required";
+          loginEmailError.style.display = "block";
+          isValid = false;
+        } else if (!validateEmail(loginEmail.value.trim())) {
+          loginEmailError.textContent = "Please enter a valid email";
+          loginEmailError.style.display = "block";
+          isValid = false;
+        }
+
+        if (!loginPassword.value) {
+          loginPasswordError.textContent = "Password is required";
+          loginPasswordError.style.display = "block";
+          isValid = false;
+        }
+
+        if (isValid) {
+          signInWithEmailAndPassword(
+            auth,
+            loginEmail.value.trim(),
+            loginPassword.value
+          )
+            .then(() => {
+              loginSuccess.textContent = "Login successful! Redirecting...";
+              loginSuccess.style.display = "block";
+              setTimeout(() => {
+                window.location.href = "https://dusfire.github.io/xomusic/";
+              }, 1500);
+            })
+            .catch((error) => {
+              loginError.textContent = error.message;
+              loginError.style.display = "block";
+            });
+        }
+      });
+
+      // Sign-up Form
+      signupSubmit.addEventListener("click", () => {
+        clearErrors();
+        let isValid = true;
+
+        if (!signupEmail.value.trim()) {
+          signupEmailError.textContent = "Email is required";
+          signupEmailError.style.display = "block";
+          isValid = false;
+        } else if (!validateEmail(signupEmail.value.trim())) {
+          signupEmailError.textContent = "Please enter a valid email";
+          signupEmailError.style.display = "block";
+          isValid = false;
+        }
+
+        if (!signupPassword.value) {
+          signupPasswordError.textContent = "Password is required";
+          signupPasswordError.style.display = "block";
+          isValid = false;
+        } else if (!validatePassword(signupPassword.value)) {
+          signupPasswordError.textContent =
+            "Password must be at least 6 characters";
+          signupPasswordError.style.display = "block";
+          isValid = false;
+        }
+
+        if (!confirmPassword.value) {
+          confirmPasswordError.textContent = "Please confirm your password";
+          confirmPasswordError.style.display = "block";
+          isValid = false;
+        } else if (signupPassword.value !== confirmPassword.value) {
+          confirmPasswordError.textContent = "Passwords do not match";
+          confirmPasswordError.style.display = "block";
+          isValid = false;
+        }
+
+        if (isValid) {
+          createUserWithEmailAndPassword(
+            auth,
+            signupEmail.value.trim(),
+            signupPassword.value
+          )
+            .then(() => {
+              signupSuccess.textContent =
+                "Account created successfully! Redirecting...";
+              signupSuccess.style.display = "block";
+              setTimeout(() => {
+                window.location.href = "https://dusfire.github.io/xomusic/";
+              }, 1500);
+            })
+            .catch((error) => {
+              signupError.textContent = error.message;
+              signupError.style.display = "block";
+            });
+        }
+      });
+
+      // Google Sign-in
+      googleLogin.addEventListener("click", () => {
+        signInWithPopup(auth, googleProvider)
+          .then(() => {
+            window.location.href = "https://dusfire.github.io/xomusic/";
+          })
+          .catch((error) => {
+            loginError.textContent = error.message;
+            loginError.style.display = "block";
+          });
+      });
+
+      googleSignup.addEventListener("click", () => {
+        signInWithPopup(auth, googleProvider)
+          .then(() => {
+            window.location.href = "https://dusfire.github.io/xomusic/";
+          })
+          .catch((error) => {
+            signupError.textContent = error.message;
+            signupError.style.display = "block";
+          });
+      });
+    </script>
+  </body>
+</html>

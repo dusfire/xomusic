@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Page Not Found</title>
+    <style>
+      /* Global CSS Variables */
+      :root {
+        --primary-color: #ff8c00;
+        --secondary-color: #ff6b00;
+        --text-color: #ffffff;
+        --background-color: #121212;
+        --secondary-bg-color: #1e1e1e;
+        --wave-color-1: #00c6ff;
+        --wave-color-2: #ff00ff;
+        --light-text-color: #b3b3b3;
+        --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        --transition: all 0.3s ease;
+      }
+
+      /* Light Theme Variables */
+      .light-theme {
+        --text-color: #121212;
+        --background-color: #ffffff;
+        --secondary-bg-color: #f5f5f5;
+        --light-text-color: #555555;
+        --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        transition: var(--transition);
+        overflow-x: hidden;
+      }
+
+      .container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+      }
+
+      .error-number {
+        font-size: 12rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        position: relative;
+        line-height: 1;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(
+          to right,
+          var(--primary-color),
+          var(--wave-color-1),
+          var(--wave-color-2)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: colorShift 8s ease-in-out infinite;
+      }
+
+      @keyframes colorShift {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .error-text {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+      }
+
+      .error-desc {
+        font-size: 1.2rem;
+        color: var(--light-text-color);
+        max-width: 600px;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+      }
+
+      .back-button {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: var(--text-color);
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .back-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .back-button:active {
+        transform: translateY(0);
+        box-shadow: var(--box-shadow);
+      }
+
+      .back-button::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 150%;
+        height: 150%;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+        transition: transform 0.6s, opacity 0.6s;
+      }
+
+      .back-button:hover::after {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+
+      .back-button svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+      }
+
+      .theme-toggle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: var(--secondary-bg-color);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+      }
+
+      .theme-toggle:hover {
+        transform: rotate(30deg);
+      }
+
+      .theme-toggle svg {
+        width: 24px;
+        height: 24px;
+        fill: var(--text-color);
+        transition: var(--transition);
+      }
+
+      .wave-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+        z-index: 1;
+      }
+
+      .wave {
+        position: relative;
+        width: 100%;
+        height: 120px;
+      }
+
+      .wave-path {
+        animation: wave 10s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+        fill: var(--secondary-bg-color);
+      }
+
+      .wave-path-2 {
+        animation: wave 15s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+        animation-delay: -2s;
+        opacity: 0.5;
+      }
+
+      @keyframes wave {
+        0% {
+          transform: translateX(0) translateZ(0) scaleY(1);
+        }
+        50% {
+          transform: translateX(-25%) translateZ(0) scaleY(0.8);
+        }
+        100% {
+          transform: translateX(-50%) translateZ(0) scaleY(1);
+        }
+      }
+
+      /* Responsive Styles */
+      @media screen and (max-width: 768px) {
+        .error-number {
+          font-size: 8rem;
+        }
+
+        .error-text {
+          font-size: 1.5rem;
+        }
+
+        .error-desc {
+          font-size: 1rem;
+          padding: 0 1rem;
+        }
+
+        .wave {
+          height: 80px;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .error-number {
+          font-size: 6rem;
+        }
+
+        .error-text {
+          font-size: 1.2rem;
+        }
+
+        .container {
+          padding: 1rem;
+        }
+
+        .wave {
+          height: 60px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" aria-label="Toggle Light/Dark Theme">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path
+          d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM12 20V4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20Z"
+        />
+      </svg>
+    </button>
+
+    <div class="container">
+      <h1 class="error-number">404</h1>
+      <h2 class="error-text">Page Not Found</h2>
+      <p class="error-desc">
+        The page you are looking for might have been removed, had its name
+        changed, or is temporarily unavailable.
+      </p>
+      <button class="back-button" onclick="goHome()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path
+            d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"
+          />
+        </svg>
+        Back to Home
+      </button>
+    </div>
+
+    <div class="wave-container">
+      <svg
+        class="wave"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+      >
+        <path
+          class="wave-path"
+          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+        ></path>
+      </svg>
+      <svg
+        class="wave"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+      >
+        <path
+          class="wave-path wave-path-2"
+          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+        ></path>
+      </svg>
+    </div>
+
+    <script>
+      // Function to go back to home page
+      function goHome() {
+        window.location.href = "https://dusfire.github.io/xomusic/";
+      }
+
+      // Theme toggle functionality
+      const themeToggle = document.querySelector(".theme-toggle");
+      const body = document.body;
+
+      // Check for saved theme preference or respect OS preference
+      const prefersDarkScheme = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      );
+      const savedTheme = localStorage.getItem("theme");
+
+      if (savedTheme === "light") {
+        body.classList.add("light-theme");
+        updateThemeIcon(true);
+      } else if (savedTheme === "dark") {
+        body.classList.remove("light-theme");
+        updateThemeIcon(false);
+      } else if (prefersDarkScheme.matches) {
+        body.classList.remove("light-theme");
+        updateThemeIcon(false);
+      } else {
+        body.classList.add("light-theme");
+        updateThemeIcon(true);
+      }
+
+      themeToggle.addEventListener("click", () => {
+        if (body.classList.contains("light-theme")) {
+          body.classList.remove("light-theme");
+          localStorage.setItem("theme", "dark");
+          updateThemeIcon(false);
+        } else {
+          body.classList.add("light-theme");
+          localStorage.setItem("theme", "light");
+          updateThemeIcon(true);
+        }
+      });
+
+      function updateThemeIcon(isLight) {
+        if (isLight) {
+          themeToggle.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 18C8.68629 18 6 15.3137 6.00001 12C6.00001 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604L19.0711 3.51472ZM5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711L5.63604 16.9497ZM23 11V13H20V11H23ZM4 11V13H1V11H4Z"/>
+                    </svg>
+                `;
+        } else {
+          themeToggle.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM12 20V4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20Z"/>
+                    </svg>
+                `;
+        }
+      }
+
+      // Add smooth animation to the error number on load
+      document.addEventListener("DOMContentLoaded", () => {
+        const errorNumber = document.querySelector(".error-number");
+        errorNumber.style.opacity = "0";
+        errorNumber.style.transform = "translateY(-20px)";
+        errorNumber.style.transition = "opacity 0.8s ease, transform 0.8s ease";
+
+        setTimeout(() => {
+          errorNumber.style.opacity = "1";
+          errorNumber.style.transform = "translateY(0)";
+        }, 300);
+      });
+    </script>
+  </body>
+</html>
