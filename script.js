@@ -207,10 +207,13 @@ function togglePlay() {
 }
 
 audio.addEventListener("ended", () => {
-  isPlaying = false;
-  playIcon.className = "bx bx-play";
-  audioWave.classList.remove("playing");
-  currentSongCover.classList.remove("spin");
+  if (!isRepeat) {
+    nextSong();
+  } else {
+    // अगर रिपीट मोड चालू है तो वही गाना फिर से शुरू करें
+    audio.currentTime = 0;
+    audio.play();
+  }
 });
 
 // Update progress bar
