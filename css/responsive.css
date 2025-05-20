@@ -1,0 +1,370 @@
+/* XoFilmy - Responsive Stylesheet */
+
+/* Movie Card Responsive Styles */
+.movie-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-md);
+    background-color: var(--light-card);
+    transition: transform var(--transition-fast);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dark-theme .movie-card {
+    background-color: var(--dark-card);
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.movie-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
+.movie-poster {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+    aspect-ratio: 2/3;
+}
+
+.movie-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.movie-card:hover .movie-poster img {
+    transform: scale(1.05);
+}
+
+.movie-info {
+    padding: var(--spacing-md);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.movie-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--light-text);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.dark-theme .movie-title {
+    color: var(--dark-text);
+}
+
+.movie-category {
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.trending-tag {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: var(--border-radius-sm);
+    z-index: 1;
+}
+
+/* Skeleton Loading */
+.skeleton-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-md);
+    background-color: var(--light-card);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dark-theme .skeleton-card {
+    background-color: var(--dark-card);
+}
+
+.skeleton-poster {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+    aspect-ratio: 2/3;
+    background-color: #e0e0e0;
+}
+
+.dark-theme .skeleton-poster {
+    background-color: #2a2a2a;
+}
+
+.skeleton-info {
+    padding: var(--spacing-md);
+    flex-grow: 1;
+}
+
+.skeleton-title {
+    height: 1rem;
+    width: 90%;
+    background-color: #e0e0e0;
+    margin-bottom: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+}
+
+.dark-theme .skeleton-title {
+    background-color: #2a2a2a;
+}
+
+.skeleton-category {
+    height: 0.8rem;
+    width: 60%;
+    background-color: #e0e0e0;
+    border-radius: var(--border-radius-sm);
+}
+
+.dark-theme .skeleton-category {
+    background-color: #2a2a2a;
+}
+
+.skeleton-pulse {
+    animation: pulse 1.5s infinite ease-in-out;
+    background-image: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.2) 20%, 
+        rgba(255, 255, 255, 0.5) 60%, 
+        rgba(255, 255, 255, 0) 100%);
+    background-size: 200% 100%;
+    background-repeat: no-repeat;
+    background-position: -100% 0;
+}
+
+.dark-theme .skeleton-pulse {
+    background-image: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.1) 20%, 
+        rgba(255, 255, 255, 0.2) 60%, 
+        rgba(255, 255, 255, 0) 100%);
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.7;
+        background-position: -100% 0;
+    }
+    50% {
+        opacity: 0.9;
+    }
+    100% {
+        opacity: 0.7;
+        background-position: 200% 0;
+    }
+}
+
+/* Movie Page Skeleton Loading */
+.skeleton-poster-large {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 2/3;
+    background-color: #e0e0e0;
+    border-radius: var(--border-radius-md);
+}
+
+.dark-theme .skeleton-poster-large {
+    background-color: #2a2a2a;
+}
+
+.skeleton-label {
+    height: 0.875rem;
+    width: 80px;
+    background-color: #e0e0e0;
+    border-radius: var(--border-radius-sm);
+}
+
+.dark-theme .skeleton-label {
+    background-color: #2a2a2a;
+}
+
+.skeleton-value {
+    height: 0.875rem;
+    width: 120px;
+    background-color: #e0e0e0;
+    border-radius: var(--border-radius-sm);
+}
+
+.dark-theme .skeleton-value {
+    background-color: #2a2a2a;
+}
+
+.skeleton-description {
+    height: 0.875rem;
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 8px;
+}
+
+.dark-theme .skeleton-description {
+    background-color: #2a2a2a;
+}
+
+.skeleton-button {
+    height: 40px;
+    width: 180px;
+    background-color: #e0e0e0;
+    border-radius: var(--border-radius-md);
+    margin: 0 auto;
+}
+
+.dark-theme .skeleton-button {
+    background-color: #2a2a2a;
+}
+
+.skeleton-screenshot {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: #e0e0e0;
+    border-radius: var(--border-radius-md);
+}
+
+.dark-theme .skeleton-screenshot {
+    background-color: #2a2a2a;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .trending-container, .related-movies {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: var(--spacing-md);
+        padding: var(--spacing-sm) 0;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        margin: 0 -16px; /* Extend beyond container padding */
+        padding: var(--spacing-sm) 16px; /* Add horizontal padding */
+        position: relative;
+        mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    }
+    
+    .latest-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+        margin: 0;
+    }
+    
+    .trending-container::-webkit-scrollbar, 
+    .related-movies::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .trending-container::after,
+    .related-movies::after {
+        content: '';
+    }
+    
+    .trending-container .movie-card,
+    .trending-container .skeleton-card,
+    .related-movies .movie-card,
+    .related-movies .skeleton-card {
+        min-width: 140px; /* Better size for Galaxy S8+ */
+        width: 140px;
+        scroll-snap-align: start;
+        margin-bottom: var(--spacing-sm);
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .latest-container .movie-card,
+    .latest-container .skeleton-card {
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .movie-card:active {
+        transform: scale(0.98);
+    }
+    
+    .movie-title {
+        font-size: 0.85rem;
+    }
+    
+    .movie-category {
+        font-size: 0.7rem;
+    }
+    
+    /* Specific optimization for Galaxy S8+ and similar devices */
+    @media (min-width: 360px) and (max-width: 450px) {
+        .movie-card, .skeleton-card {
+            min-width: 150px !important;
+            width: 150px !important;
+        }
+        
+        .trending-container, .latest-container, .related-movies {
+            gap: 12px !important;
+        }
+    }
+}
+
+/* Movie Detail Page Responsive Styles */
+@media (min-width: 768px) {
+    .movie-content {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    
+    .movie-poster-large {
+        flex: 0 0 300px;
+    }
+    
+    .movie-info-container {
+        flex: 1;
+        padding-left: var(--spacing-xl);
+    }
+    
+    .screenshots-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .screenshots-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .trending-container, .latest-container, .related-movies {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1025px) {
+    .trending-container, .latest-container, .related-movies {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}

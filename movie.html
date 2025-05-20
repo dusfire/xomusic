@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details - XoFilmy</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#ff4d00">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-container">
+            <button id="menu-btn" class="icon-btn">
+                <i class='bx bx-menu'></i>
+            </button>
+            
+            <a href="index.html" class="logo">
+                <img src="assets/logo.svg" alt="XoFilmy Logo">
+            </a>
+            
+            <button id="search-btn" class="icon-btn">
+                <i class='bx bx-search'></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Menu Overlay -->
+    <div id="menu-overlay" class="menu-overlay">
+        <div class="menu-content">
+            <div class="menu-header">
+                <div class="menu-logo">
+                    <img src="assets/logo.svg" alt="XoFilmy Logo">
+                </div>
+                
+                <button id="close-menu-btn" class="menu-close">
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+            
+            <nav class="menu-nav">
+                <ul class="menu-nav-list">
+                    <li class="menu-nav-item">
+                        <a href="index.html" class="menu-nav-link">
+                            <i class='bx bx-home'></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="menu-nav-item">
+                        <a href="#about" class="menu-nav-link">
+                            <i class='bx bx-info-circle'></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                    <li class="menu-nav-item">
+                        <a href="#how-to" class="menu-nav-link">
+                            <i class='bx bx-help-circle'></i>
+                            <span>How to Download</span>
+                        </a>
+                    </li>
+                    <li class="menu-nav-item">
+                        <a href="#contact" class="menu-nav-link">
+                            <i class='bx bx-envelope'></i>
+                            <span>Contact</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div id="dark-mode-toggle" class="theme-toggle">
+                <i class='bx bx-moon'></i>
+                <span>Dark Mode</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay">
+        <div class="search-header">
+            <h2 class="search-title">Search Movies</h2>
+            
+            <button id="close-search-btn" class="search-close">
+                <i class='bx bx-x'></i>
+            </button>
+        </div>
+        
+        <form id="search-form" class="search-form">
+            <div class="search-input-group">
+                <input type="text" id="search-input" class="search-input" placeholder="Search for movies...">
+                <button type="submit" class="search-submit">
+                    <i class='bx bx-search'></i>
+                </button>
+            </div>
+        </form>
+        
+        <div id="search-results" class="search-results"></div>
+        
+        <div id="no-results" class="no-results">
+            <i class='bx bx-search-alt'></i>
+            <h3 class="no-results-text">No results found</h3>
+            <p class="no-results-subtext">Try searching with different keywords</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Skeleton Loading -->
+        <section id="movie-skeleton" class="movie-detail skeleton-loading">
+            <div class="container movie-detail-container">
+                <div class="movie-header">
+                    <div class="skeleton-title-large skeleton-pulse"></div>
+                </div>
+                
+                <div class="movie-content">
+                    <div class="skeleton-poster-large skeleton-pulse"></div>
+                    
+                    <div class="movie-info-container">
+                        <div class="movie-details-list">
+                            <div class="skeleton-detail-item skeleton-pulse"></div>
+                            <div class="skeleton-detail-item skeleton-pulse"></div>
+                            <div class="skeleton-detail-item skeleton-pulse"></div>
+                            <div class="skeleton-detail-item skeleton-pulse"></div>
+                            <div class="skeleton-detail-item skeleton-pulse"></div>
+                            <div class="skeleton-detail-item skeleton-pulse"></div>
+                        </div>
+                        
+                        <div class="movie-description-container">
+                            <div class="skeleton-label skeleton-pulse"></div>
+                            <div class="skeleton-description skeleton-pulse"></div>
+                            <div class="skeleton-description skeleton-pulse"></div>
+                            <div class="skeleton-description skeleton-pulse"></div>
+                        </div>
+                        
+                        <div class="download-section">
+                            <div class="skeleton-button skeleton-pulse"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Skeleton Screenshots Section -->
+                <div class="screenshots-section">
+                    <div class="skeleton-section-title skeleton-pulse"></div>
+                    <div class="screenshots-grid">
+                        <div class="skeleton-screenshot skeleton-pulse"></div>
+                        <div class="skeleton-screenshot skeleton-pulse"></div>
+                        <div class="skeleton-screenshot skeleton-pulse"></div>
+                        <div class="skeleton-screenshot skeleton-pulse"></div>
+                    </div>
+                </div>
+                
+                <!-- Skeleton Related Movies Section -->
+                <div class="related-section">
+                    <div class="skeleton-section-title skeleton-pulse"></div>
+                    <div class="related-movies">
+                        <div class="skeleton-card">
+                            <div class="skeleton-poster skeleton-pulse"></div>
+                            <div class="skeleton-info">
+                                <div class="skeleton-title skeleton-pulse"></div>
+                                <div class="skeleton-category skeleton-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton-card">
+                            <div class="skeleton-poster skeleton-pulse"></div>
+                            <div class="skeleton-info">
+                                <div class="skeleton-title skeleton-pulse"></div>
+                                <div class="skeleton-category skeleton-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton-card">
+                            <div class="skeleton-poster skeleton-pulse"></div>
+                            <div class="skeleton-info">
+                                <div class="skeleton-title skeleton-pulse"></div>
+                                <div class="skeleton-category skeleton-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton-card">
+                            <div class="skeleton-poster skeleton-pulse"></div>
+                            <div class="skeleton-info">
+                                <div class="skeleton-title skeleton-pulse"></div>
+                                <div class="skeleton-category skeleton-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Movie Detail Section -->
+        <section id="movie-detail" class="movie-detail" style="display: none;">
+            <div class="container movie-detail-container">
+                <div class="movie-header">
+                    <h1 id="movie-title" class="movie-title-large">Movie Title</h1>
+                </div>
+                
+                <div class="movie-content">
+                    <div class="movie-poster-large">
+                        <img id="movie-cover" src="#" alt="Movie Cover">
+                    </div>
+                    
+                    <div class="movie-info-container">
+                        <div id="movie-details" class="movie-details-list">
+                            <!-- Movie details will be populated by JavaScript -->
+                        </div>
+                        
+                        <div class="movie-description-container">
+                            <h3>Description</h3>
+                            <p id="movie-description" class="movie-description">Movie description will be populated by JavaScript.</p>
+                        </div>
+                        
+                        <div class="download-section">
+                            <a id="download-btn" href="#" target="_blank" class="download-btn">
+                                <i class='bx bx-download'></i>
+                                Download Movie
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Screenshots Section -->
+                <div class="screenshots-section">
+                    <h2 class="section-title">
+                        <i class='bx bx-images'></i>
+                        Screenshots
+                    </h2>
+                    
+                    <div id="screenshots" class="screenshots-grid">
+                        <!-- Screenshots will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Related Movies Section -->
+                <div class="related-section">
+                    <h2 class="section-title">
+                        <i class='bx bx-film'></i>
+                        Related Movies
+                    </h2>
+                    
+                    <div id="related-movies" class="related-movies">
+                        <!-- Related movies will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-logo">
+                <img src="assets/logo.svg" alt="XoFilmy Logo">
+            </div>
+            
+            <nav class="footer-nav">
+                <a href="index.html" class="footer-nav-link">Home</a>
+                <a href="#about" class="footer-nav-link">About</a>
+                <a href="#how-to" class="footer-nav-link">How to Download</a>
+                <a href="#contact" class="footer-nav-link">Contact</a>
+                <a href="xoadmin.html" class="footer-nav-link">Admin</a>
+            </nav>
+            
+            <div class="footer-social">
+                <a href="#" class="social-link">
+                    <i class='bx bxl-facebook'></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class='bx bxl-twitter'></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class='bx bxl-instagram'></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class='bx bxl-telegram'></i>
+                </a>
+            </div>
+            
+            <p class="footer-copy">&copy; 2025 XoFilmy. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Firebase Scripts -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyAe1lFN-bAcd_f-XU-NCVII-mCqh04-lR4",
+            authDomain: "xofilmy.firebaseapp.com",
+            projectId: "xofilmy",
+            storageBucket: "xofilmy.firebasestorage.app",
+            messagingSenderId: "744877520454",
+            appId: "1:744877520454:web:c18fdbff07606d2dc4fc47",
+            measurementId: "G-Y6MSSSZPM8"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
+    
+    <!-- Custom JS -->
+    <script type="module" src="js/App.js"></script>
+</body>
+</html>

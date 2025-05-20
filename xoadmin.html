@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - XoFilmy</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/xoadmin.css">
+    
+    <!-- Meta tags for better SEO -->
+    <meta name="description" content="XoFilmy Admin Panel - Manage your movie database">
+    <meta name="author" content="XoFilmy">
+</head>
+<body>
+    <!-- Theme Toggle Button (Global) -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode">
+        <i class='bx bx-sun'></i>
+    </button>
+    
+    <!-- Login Container -->
+    <div id="login-container" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">
+                    <img src="assets/logo.svg" alt="XoFilmy Logo">
+                </div>
+                <h1 class="login-title">Admin Login</h1>
+                <p class="login-subtitle">Enter your credentials to access the admin panel</p>
+            </div>
+            
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <div class="input-with-icon">
+                        <i class='bx bx-user input-icon'></i>
+                        <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-with-icon">
+                        <i class='bx bx-lock input-icon'></i>
+                        <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
+                        <button type="button" id="password-toggle" class="password-toggle" aria-label="Toggle password visibility">
+                            <i class='bx bx-hide'></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="login-btn">Login</button>
+                
+                <div id="login-error" class="login-error">
+                    <i class='bx bx-error-circle'></i> Invalid email or password. Please try again.
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="admin-panel">
+        <div class="container">
+            <div class="admin-header">
+                <div class="admin-logo">
+                    <img src="assets/logo.svg" alt="XoFilmy Logo">
+                    <h1 class="admin-title">Admin Panel</h1>
+                </div>
+                
+                <div class="admin-controls">
+                    <div class="admin-actions">
+                        <button id="refresh-btn" class="action-btn" title="Refresh Data">
+                            <i class='bx bx-refresh'></i>
+                        </button>
+                        <button id="logout-btn" class="logout-btn">
+                            <i class='bx bx-log-out'></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="admin-tabs">
+                <div id="movie-list-tab" class="admin-tab active">Movie List</div>
+                <div id="add-movie-tab" class="admin-tab">Add Movie</div>
+                <div id="analytics-tab" class="admin-tab">Analytics</div>
+            </div>
+            
+            <!-- Movie List Section -->
+            <div id="movie-list-section" class="movie-list-section" style="display: block;">
+                <div class="form-section">
+                    <h2 class="form-title">Movie List</h2>
+                    
+                    <div class="search-filter-container">
+                        <div class="search-container">
+                            <input type="text" id="movie-search" class="search-input" placeholder="Search movies...">
+                        </div>
+                        <div class="filter-container">
+                            <select id="category-filter" class="filter-select">
+                                <option value="">All Categories</option>
+                                <option value="Bollywood Movie">Bollywood Movie</option>
+                                <option value="Hollywood Movie">Hollywood Movie</option>
+                                <option value="South Movie">South Movie</option>
+                                <option value="Webseries">Webseries</option>
+                            </select>
+                            <select id="status-filter" class="filter-select">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Cover</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Date Added</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="movie-list">
+                                <!-- Movie list will be populated by JavaScript -->
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        <i class='bx bx-loader-alt bx-spin'></i> Loading movies...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination-container">
+                        <button id="prev-page" class="pagination-btn" disabled>Previous</button>
+                        <span id="page-info" class="page-info">Page 1</span>
+                        <button id="next-page" class="pagination-btn" disabled>Next</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Add Movie Section -->
+            <div id="add-movie-section" class="add-movie-section" style="display: none;">
+                <div class="form-section">
+                    <h2 class="form-title">Add New Movie</h2>
+                    
+                    <form id="movie-form" class="movie-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="movie-title" class="form-label">Movie Title</label>
+                                <div class="input-with-icon">
+                                    <i class='bx bx-film input-icon'></i>
+                                    <input type="text" id="movie-title" class="form-input" placeholder="Enter movie title" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="movie-category" class="form-label">Category</label>
+                                <div class="input-with-icon">
+                                    <i class='bx bx-list-ul input-icon'></i>
+                                    <select id="movie-category" class="form-input" required>
+                                        <option value="">Select a category</option>
+                                        <option value="Bollywood Movie">Bollywood Movie</option>
+                                        <option value="Hollywood Movie">Hollywood Movie</option>
+                                        <option value="South Movie">South Movie</option>
+                                        <option value="Webseries">Webseries</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="movie-genre" class="form-label">Genre</label>
+                                <div class="input-with-icon">
+                                    <i class='bx bx-tag input-icon'></i>
+                                    <input type="text" id="movie-genre" class="form-input" placeholder="E.g., Action, Comedy, Horror" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-card">
+                            <h3 class="form-subtitle"><i class='bx bx-detail'></i> Movie Details</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="movie-duration" class="form-label">
+                                        <i class='bx bx-time'></i> Duration
+                                    </label>
+                                    <div class="input-with-icon">
+                                        <i class='bx bx-timer input-icon'></i>
+                                        <input type="text" id="movie-duration" class="form-input" placeholder="E.g., 2h 30min" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="movie-release-date" class="form-label">
+                                        <i class='bx bx-calendar'></i> Release Date
+                                    </label>
+                                    <div class="input-with-icon">
+                                        <i class='bx bx-calendar-alt input-icon'></i>
+                                        <input type="text" id="movie-release-date" class="form-input" value="2025" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="movie-language" class="form-label">
+                                        <i class='bx bx-globe'></i> Language
+                                    </label>
+                                    <div class="input-with-icon">
+                                        <i class='bx bx-message-alt-detail input-icon'></i>
+                                        <input type="text" id="movie-language" class="form-input" value="Hindi, English" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="movie-size" class="form-label">
+                                        <i class='bx bx-data'></i> Size
+                                    </label>
+                                    <div class="input-with-icon">
+                                        <i class='bx bx-hdd input-icon'></i>
+                                        <input type="text" id="movie-size" class="form-input" placeholder="E.g., 450mb 1Gb 3Gb HD" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row full-width">
+                                <div class="form-group">
+                                    <label for="movie-starcast" class="form-label">
+                                        <i class='bx bx-user-voice'></i> Starcast
+                                    </label>
+                                    <div class="input-with-icon">
+                                        <i class='bx bx-group input-icon'></i>
+                                        <input type="text" id="movie-starcast" class="form-input" placeholder="Enter movie starcast">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row full-width">
+                                <div class="form-group">
+                                    <label for="movie-description" class="form-label">
+                                        <i class='bx bx-text'></i> Description
+                                    </label>
+                                    <textarea id="movie-description" class="form-textarea" placeholder="Enter movie description" required></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row full-width">
+                                <div class="form-group">
+                                    <label for="movie-download-link" class="form-label">
+                                        <i class='bx bx-link'></i> Download Link
+                                    </label>
+                                    <div class="input-with-icon">
+                                        <i class='bx bx-download input-icon'></i>
+                                        <input type="url" id="movie-download-link" class="form-input" placeholder="Enter download link" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-card">
+                            <h3 class="form-subtitle"><i class='bx bx-image'></i> Media & Settings</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="movie-cover" class="form-label">
+                                        <i class='bx bx-image-alt'></i> Cover Image URL
+                                    </label>
+                                    <div class="input-with-icon">
+                                        <i class='bx bx-image-add input-icon'></i>
+                                        <input type="url" id="movie-cover" class="form-input" placeholder="Enter cover image URL" required>
+                                    </div>
+                                    <div class="preview-container">
+                                        <img id="cover-preview" class="image-preview" alt="Cover Preview">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class='bx bx-trending-up'></i> Trending
+                                    </label>
+                                    <div class="form-check">
+                                        <input type="checkbox" id="movie-trending" class="form-check-input">
+                                        <label for="movie-trending" class="form-check-label">Mark as trending</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" id="movie-featured" class="form-check-input">
+                                        <label for="movie-featured" class="form-check-label">Mark as featured</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row full-width">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class='bx bx-images'></i> Screenshots (Up to 6)
+                                    </label>
+                                    <div class="screenshots-container">
+                                        <div class="screenshot-input-container">
+                                            <div class="input-with-icon">
+                                                <i class='bx bx-image input-icon'></i>
+                                                <input type="url" id="movie-screenshot-1" class="form-input" placeholder="Screenshot 1 URL">
+                                            </div>
+                                            <div class="screenshot-preview-container">
+                                                <img id="screenshot-preview-1" class="image-preview" alt="Screenshot 1 Preview">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="screenshot-input-container">
+                                            <div class="input-with-icon">
+                                                <i class='bx bx-image input-icon'></i>
+                                                <input type="url" id="movie-screenshot-2" class="form-input" placeholder="Screenshot 2 URL">
+                                            </div>
+                                            <div class="screenshot-preview-container">
+                                                <img id="screenshot-preview-2" class="image-preview" alt="Screenshot 2 Preview">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="screenshot-input-container">
+                                            <div class="input-with-icon">
+                                                <i class='bx bx-image input-icon'></i>
+                                                <input type="url" id="movie-screenshot-3" class="form-input" placeholder="Screenshot 3 URL">
+                                            </div>
+                                            <div class="screenshot-preview-container">
+                                                <img id="screenshot-preview-3" class="image-preview" alt="Screenshot 3 Preview">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="screenshot-input-container">
+                                            <div class="input-with-icon">
+                                                <i class='bx bx-image input-icon'></i>
+                                                <input type="url" id="movie-screenshot-4" class="form-input" placeholder="Screenshot 4 URL">
+                                            </div>
+                                            <div class="screenshot-preview-container">
+                                                <img id="screenshot-preview-4" class="image-preview" alt="Screenshot 4 Preview">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="screenshot-input-container">
+                                            <div class="input-with-icon">
+                                                <i class='bx bx-image input-icon'></i>
+                                                <input type="url" id="movie-screenshot-5" class="form-input" placeholder="Screenshot 5 URL">
+                                            </div>
+                                            <div class="screenshot-preview-container">
+                                                <img id="screenshot-preview-5" class="image-preview" alt="Screenshot 5 Preview">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="screenshot-input-container">
+                                            <div class="input-with-icon">
+                                                <i class='bx bx-image input-icon'></i>
+                                                <input type="url" id="movie-screenshot-6" class="form-input" placeholder="Screenshot 6 URL">
+                                            </div>
+                                            <div class="screenshot-preview-container">
+                                                <img id="screenshot-preview-6" class="image-preview" alt="Screenshot 6 Preview">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" id="submit-btn" class="submit-btn">
+                                <i class='bx bx-plus-circle'></i> Add Movie
+                            </button>
+                        </div>
+                        
+                        <div id="form-success" class="form-success"></div>
+                        <div id="form-error" class="form-error"></div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Analytics Section -->
+            <div id="analytics-section" class="analytics-section" style="display: none;">
+                <div class="form-section">
+                    <h2 class="form-title">Analytics Dashboard</h2>
+                    
+                    <div class="analytics-cards">
+                        <div class="analytics-card">
+                            <div class="analytics-icon">
+                                <i class='bx bx-movie'></i>
+                            </div>
+                            <div class="analytics-info">
+                                <div class="analytics-title">Total Movies</div>
+                                <h3 class="analytics-value" id="total-movies">124</h3>
+                                <div class="analytics-subtitle">in your database</div>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div class="analytics-icon">
+                                <i class='bx bx-trending-up'></i>
+                            </div>
+                            <div class="analytics-info">
+                                <div class="analytics-title">Trending Movies</div>
+                                <h3 class="analytics-value" id="trending-movies">37</h3>
+                                <div class="analytics-subtitle">most viewed this week</div>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div class="analytics-icon">
+                                <i class='bx bx-plus'></i>
+                            </div>
+                            <div class="analytics-info">
+                                <div class="analytics-title">Recent Additions</div>
+                                <h3 class="analytics-value" id="recent-additions">18</h3>
+                                <div class="analytics-subtitle">added this month</div>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div class="analytics-icon">
+                                <i class='bx bx-user'></i>
+                            </div>
+                            <div class="analytics-info">
+                                <div class="analytics-title">Active Users</div>
+                                <h3 class="analytics-value" id="active-users">2.3k</h3>
+                                <div class="analytics-subtitle">in the last 30 days</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-charts">
+                        <div class="chart-container">
+                            <h3 class="chart-title"><i class='bx bx-pie-chart-alt-2'></i> Category Distribution</h3>
+                            <div class="chart" id="category-chart">
+                                <!-- Chart will be rendered here -->
+                                <div class="chart-placeholder">
+                                    <i class='bx bx-pie-chart-alt-2'></i>
+                                    <p>Chart data loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h3 class="chart-title"><i class='bx bx-bar-chart-alt-2'></i> Monthly Additions</h3>
+                            <div class="chart" id="monthly-chart">
+                                <!-- Chart will be rendered here -->
+                                <div class="chart-placeholder">
+                                    <i class='bx bx-bar-chart-alt-2'></i>
+                                    <p>Chart data loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-activity">
+                        <h3 class="activity-title"><i class='bx bx-history'></i> Recent Activity</h3>
+                        <div class="activity-list" id="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon"><i class='bx bx-plus-circle'></i></div>
+                                <div class="activity-content">
+                                    <div class="activity-text">Added new movie: <strong>The Shawshank Redemption</strong></div>
+                                    <div class="activity-time">Today, 2:30 PM</div>
+                                </div>
+                            </div>
+                            
+                            <div class="activity-item">
+                                <div class="activity-icon"><i class='bx bx-edit'></i></div>
+                                <div class="activity-content">
+                                    <div class="activity-text">Updated movie: <strong>Inception</strong></div>
+                                    <div class="activity-time">Yesterday, 10:15 AM</div>
+                                </div>
+                            </div>
+                            
+                            <div class="activity-item">
+                                <div class="activity-icon"><i class='bx bx-trash'></i></div>
+                                <div class="activity-content">
+                                    <div class="activity-text">Deleted movie: <strong>The Matrix</strong></div>
+                                    <div class="activity-time">Aug 15, 2023</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Firebase Scripts -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-analytics.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js";
+        import { getStorage } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-storage.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js";
+        
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAe1lFN-bAcd_f-XU-NCVII-mCqh04-lR4",
+            authDomain: "xofilmy.firebaseapp.com",
+            projectId: "xofilmy",
+            storageBucket: "xofilmy.firebasestorage.app",
+            messagingSenderId: "744877520454",
+            appId: "1:744877520454:web:c18fdbff07606d2dc4fc47",
+            measurementId: "G-Y6MSSSZPM8"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+        const auth = getAuth(app);
+        
+        // Import admin functionality
+        import "./js/xoAdmin.js";
+    </script>
+    
+    <!-- Theme Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('xofilmy-theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-theme');
+                updateThemeIcons(true);
+            }
+            
+            // Toggle theme function
+            function toggleTheme() {
+                const isDarkTheme = body.classList.toggle('dark-theme');
+                localStorage.setItem('xofilmy-theme', isDarkTheme ? 'dark' : 'light');
+                updateThemeIcons(isDarkTheme);
+            }
+            
+            // Update theme icons
+            function updateThemeIcons(isDarkTheme) {
+                const sunIcon = '<i class="bx bx-sun"></i>';
+                const moonIcon = '<i class="bx bx-moon"></i>';
+                
+                if (themeToggle) themeToggle.innerHTML = isDarkTheme ? sunIcon : moonIcon;
+            }
+            
+            // Add event listeners
+            if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+            
+            // Tab switching functionality
+            const movieListTab = document.getElementById('movie-list-tab');
+            const addMovieTab = document.getElementById('add-movie-tab');
+            const analyticsTab = document.getElementById('analytics-tab');
+            
+            const movieListSection = document.getElementById('movie-list-section');
+            const addMovieSection = document.getElementById('add-movie-section');
+            const analyticsSection = document.getElementById('analytics-section');
+            
+            function switchTab(activeTab, activeSection) {
+                // Remove active class from all tabs
+                movieListTab.classList.remove('active');
+                addMovieTab.classList.remove('active');
+                analyticsTab.classList.remove('active');
+                
+                // Hide all sections
+                movieListSection.style.display = 'none';
+                addMovieSection.style.display = 'none';
+                analyticsSection.style.display = 'none';
+                
+                // Add active class to selected tab and show selected section
+                activeTab.classList.add('active');
+                activeSection.style.display = 'block';
+            }
+            
+            // Add event listeners to tabs
+            movieListTab.addEventListener('click', () => switchTab(movieListTab, movieListSection));
+            addMovieTab.addEventListener('click', () => switchTab(addMovieTab, addMovieSection));
+            analyticsTab.addEventListener('click', () => switchTab(analyticsTab, analyticsSection));
+            
+            // Password toggle functionality
+            const passwordToggle = document.getElementById('password-toggle');
+            const passwordInput = document.getElementById('password');
+            
+            if (passwordToggle && passwordInput) {
+                passwordToggle.addEventListener('click', () => {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    
+                    const icon = passwordInput.getAttribute('type') === 'password' ? 
+                        '<i class="bx bx-hide"></i>' : 
+                        '<i class="bx bx-show"></i>';
+                    
+                    passwordToggle.innerHTML = icon;
+                });
+            }
+            
+            // Refresh button functionality
+            const refreshBtn = document.getElementById('refresh-btn');
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', () => {
+                    // Add rotation animation
+                    const icon = refreshBtn.querySelector('i');
+                    if (icon) icon.classList.add('bx-spin');
+                    
+                    // Simulate refresh
+                    setTimeout(() => {
+                        if (icon) icon.classList.remove('bx-spin');
+                        location.reload();
+                    }, 1000);
+                });
+            }
+        });
+    </script>
+    
+    <!-- Custom JS -->
+    <script type="module" src="js/xoAdmin.js"></script>
+</body>
+</html>
